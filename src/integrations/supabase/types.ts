@@ -14,7 +14,192 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      car_images: {
+        Row: {
+          car_id: string
+          created_at: string
+          id: string
+          image_url: string
+        }
+        Insert: {
+          car_id: string
+          created_at?: string
+          id?: string
+          image_url: string
+        }
+        Update: {
+          car_id?: string
+          created_at?: string
+          id?: string
+          image_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_images_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cars: {
+        Row: {
+          brand: string
+          created_at: string
+          fuel_consumption: number
+          id: string
+          image_url: string | null
+          maintenance: string
+          name: string
+          origin: string
+          performance: Database["public"]["Enums"]["performance_type"]
+          price: number
+          resale_value: number
+          safety_features: Json
+          type: Database["public"]["Enums"]["car_type"]
+        }
+        Insert: {
+          brand: string
+          created_at?: string
+          fuel_consumption: number
+          id?: string
+          image_url?: string | null
+          maintenance: string
+          name: string
+          origin: string
+          performance: Database["public"]["Enums"]["performance_type"]
+          price: number
+          resale_value: number
+          safety_features?: Json
+          type: Database["public"]["Enums"]["car_type"]
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          fuel_consumption?: number
+          id?: string
+          image_url?: string | null
+          maintenance?: string
+          name?: string
+          origin?: string
+          performance?: Database["public"]["Enums"]["performance_type"]
+          price?: number
+          resale_value?: number
+          safety_features?: Json
+          type?: Database["public"]["Enums"]["car_type"]
+        }
+        Relationships: []
+      }
+      quiz_answers: {
+        Row: {
+          answers: Json
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      recommendations: {
+        Row: {
+          car_id: string
+          created_at: string
+          id: string
+          score: number
+          user_id: string
+        }
+        Insert: {
+          car_id: string
+          created_at?: string
+          id?: string
+          score: number
+          user_id: string
+        }
+        Update: {
+          car_id?: string
+          created_at?: string
+          id?: string
+          score?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recommendations_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          car_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          car_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          user_id: string
+        }
+        Update: {
+          car_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+          role?: Database["public"]["Enums"]["user_role"]
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +208,9 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      car_type: "sedan" | "suv" | "crossover" | "hatchback"
+      performance_type: "economic" | "balanced" | "sporty"
+      user_role: "user" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +337,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      car_type: ["sedan", "suv", "crossover", "hatchback"],
+      performance_type: ["economic", "balanced", "sporty"],
+      user_role: ["user", "admin"],
+    },
   },
 } as const
